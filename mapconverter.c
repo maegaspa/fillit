@@ -6,7 +6,7 @@
 /*   By: maegaspa <maegaspa@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/21 17:57:13 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/03 15:22:28 by maegaspa    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/03 16:38:14 by maegaspa    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -61,7 +61,7 @@ char	*ft_getvalidsegment(int fd)
 	while (x-- && (res = get_next_line(fd, &line) > 0))
 	{
 		seg = ft_strcat(seg, line);
-		//free(line);
+		free(line);
 	}
 	if (x == -1 || (x == 0 && res == 0))
 		return (ft_algo_vert_horiz(seg));

@@ -6,7 +6,7 @@
 /*   By: maegaspa <maegaspa@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/21 18:10:24 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/20 15:58:16 by maegaspa    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/03 15:50:56 by maegaspa    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,8 +46,8 @@ int		main(int ac, char **av)
 		solved_map = ft_createcanvas(begin, nb_pieces - 1, 0);
 		solved_map = ft_solvemap(begin, solved_map, nb_pieces - 1);
 		ft_print_map(solved_map);
-		//freetab(solved_map);
-		//freetab(map);
+		freetab(solved_map);
+		freetab(map);
 	}
 	return (0);
 }

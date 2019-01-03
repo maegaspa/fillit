@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   mapchecker.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: seanseau <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: maegaspa <maegaspa@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/21 17:57:28 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/19 13:13:42 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/20 15:57:25 by maegaspa    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -37,6 +37,7 @@ int		ft_checkvalidsegment(int fd)
 	char	*line;
 	int		ret;
 	char	*seg;
+	int		tmp;
 
 	seg = ft_strnew(0);
 	x = 5;
@@ -45,10 +46,12 @@ int		ft_checkvalidsegment(int fd)
 		seg = ft_strcat(seg, line);
 		//free(line);
 	}
+	tmp = ft_checkvalidchar(seg);
+	//free(seg);
 	if (x == -1)
-		return (ft_checkvalidchar(seg));
+		return (tmp);
 	if (x == 0 && ret == 0)
-		return (ft_checkvalidchar(seg) - 1);
+		return (tmp - 1);
 	return (-1);
 }
 

@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   mapprinter.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: seanseau <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: maegaspa <maegaspa@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/13 11:33:03 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/18 12:18:59 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/03 15:21:09 by maegaspa    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,4 +31,5 @@ void	ft_print_map(char **map)
 		ft_putstr(map[a]);
 		a++;
 	}
+	free(map);
 }

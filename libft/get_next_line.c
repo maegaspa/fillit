@@ -3,73 +3,83 @@
 /*                                                              /             */
 /*   get_next_line.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: seanseau <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: maegaspa <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/17 18:27:53 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/14 19:48:40 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/23 17:54:02 by maegaspa     #+#   ##    ##    #+#       */
+/*   Updated: 2018/12/19 17:00:49 by cgarrot     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int			ft_treat(char **str, char **line)
+char		*get_read(int fd, char **line, char *buf)
 {
-	size_t	i;
 	char	*tmp;
+	int		ret;
 
-	i = 0;
-	tmp = *str;
-	while (tmp[i] != '\n')
-		i++;
-	*line = ft_strsub(*str, 0, i);
-	tmp = *str;
-	*str = ft_strsub(tmp, i + 1, ft_strlen(*str) - (i + 1));
-	free(tmp);
-	return (1);
+	ret = 1;
+	while (!(ft_strchr(tmp, '\n')) && ret)
+	{
+		ret = read(fd, buf, BUFF_SIZE);
+		if (ret)
+		{
+			buf[ret] = '\0';
+			tmp = *line;
+			if (!(*line = ft_strjoin(*line, buf)))
+				return (NULL);
+			free(tmp);
+		}
+	}
+	free(buf);
+	return (*line);
 }
 
-int			ft_readline(int const fd, char *buffer, char **str, char **line)
+char		*get_stocked(char **line)
 {
-	int		res;
 	char	*tmp;
+	char	*str;
+	char	*buf;
 
-	while ((res = read(fd, buffer, BUFF_SIZE)) > 0)
+	buf = ft_strchr(*line, '\n');
+	tmp = NULL;
+	if (buf)
 	{
-		buffer[res] = '\0';
-		tmp = *str;
-		*str = ft_strjoin(tmp, buffer);
+		if (!(str = ft_strndup(*line, buf - *line)))
+			return (NULL);
+		tmp = *line;
+		if (!(*line = ft_strdup(buf + 1)))
+			return (NULL);
 		free(tmp);
-		if (ft_strchr(*str, '\n') != NULL)
-			return (ft_treat(str, line));
 	}
-	return (0);
+	else if (!(str = ft_strdup(*line)))
+		return (NULL);
+	if (!(*line) || !tmp)
+	{
+		free(*line);
+		*line = NULL;
+	}
+	return (str);
 }
 
 int			get_next_line(const int fd, char **line)
 {
-	char		buffer[BUFF_SIZE + 1];
-	static char	*str[10240];
-	char		*tmp;
+	static char		*tmp[10240];
+	char			*buf;
 
-	if (fd < 0 || read(fd, buffer, 0) == -1 || BUFF_SIZE <= 0 || line == NULL)
+	if (line == '\0' || BUFF_SIZE <= 0 || fd < 0)
 		return (-1);
-	*line = NULL;
-	if (!str[fd])
-		str[fd] = ft_strnew(0);
-	if (ft_strchr(str[fd], '\n') != NULL)
-		return (ft_treat(&str[fd], line));
-	if (ft_readline(fd, buffer, &str[fd], line) == 1)
-		return (1);
-	else
+	if (!(buf = ft_strnew(BUFF_SIZE + 1)) ||
+			read(fd, buf, 0) == -1 ||
+			(tmp[fd] == NULL && !(tmp[fd] = ft_strnew(0))))
+		return (-1);
+	if (!(get_read(fd, &tmp[fd], buf)))
+		return (-1);
+	if (*tmp[fd])
 	{
-		if (ft_strlen(str[fd]) > 0)
-		{
-			tmp = str[fd];
-			str[fd] = ft_strjoin(tmp, "\n");
-			free(tmp);
-			return (ft_treat(&str[fd], line));
-		}
+		if (!(*line = get_stocked(&tmp[fd])))
+			return (-1);
+		return (1);
 	}
 	return (0);
 }

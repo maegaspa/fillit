@@ -6,7 +6,7 @@
 /*   By: seanseau <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/28 15:45:12 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/17 11:21:32 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/19 17:36:21 by cgarrot     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,9 +30,10 @@ t_piece	*ft_fill(char **map, int nb_pieces, t_piece *lst)
 
 t_piece	*ft_init_list(void)
 {
-	t_piece *lst;
+	t_piece	*lst;
 
-	lst = (t_piece *)malloc(sizeof(t_piece));
+	if (!(lst = (t_piece *)malloc(sizeof(t_piece))))
+		return (0);
 	lst->index_piece = 0;
 	lst->ligne_a = 0;
 	lst->a = 0;

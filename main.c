@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   main.c                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: seanseau <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: maegaspa <maegaspa@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/21 18:10:24 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/19 13:09:31 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/20 15:58:16 by maegaspa    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,7 +23,6 @@ void	freetab(char **teub)
 		free(teub[i++]);
 	free(teub);
 }
-
 
 int		main(int ac, char **av)
 {
@@ -44,10 +43,11 @@ int		main(int ac, char **av)
 		lst = ft_init_list();
 		begin = lst;
 		lst = ft_fill(map, nb_pieces - 1, lst);
-		//freetab(map);
 		solved_map = ft_createcanvas(begin, nb_pieces - 1, 0);
 		solved_map = ft_solvemap(begin, solved_map, nb_pieces - 1);
 		ft_print_map(solved_map);
+		//freetab(solved_map);
+		//freetab(map);
 	}
 	return (0);
 }

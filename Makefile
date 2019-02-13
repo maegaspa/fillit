@@ -3,10 +3,10 @@
 #                                                               /              #
 #    Makefile                                         .::    .:/ .      .::    #
 #                                                  +:+:+   +:    +:  +:+:+     #
-#    By: seanseau <marvin@le-101.fr>                +:+   +:    +:    +:+      #
+#    By: maegaspa <maegaspa@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
-#    Created: 2018/11/21 18:44:37 by seanseau     #+#   ##    ##    #+#        #
-#    Updated: 2018/12/17 16:43:08 by seanseau    ###    #+. /#+    ###.fr      #
+#    Created: 2019/01/21 15:42:26 by seanseau     #+#   ##    ##    #+#        #
+#    Updated: 2019/01/22 17:14:24 by maegaspa    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -21,12 +21,12 @@ FLAGS = -Wall -Wextra -Werror
 INCLUDE = ./includes
 
 FILES = main\
-mapchecker\
-mapconverter\
-mapparser\
-mapsolver\
-mapcreator\
-mapprinter\
+		mapchecker\
+		mapconverter\
+		mapparser\
+		mapcreator\
+		mapsolver\
+		tool\
 
 SRC = $(addsuffix .c, $(FILES))
 OBJ= $(addsuffix .o, $(FILES))

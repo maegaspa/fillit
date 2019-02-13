@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_recursive_factorial.c                         .::    .:/ .      .::   */
+/*   ft_index.c                                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: maegaspa <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: calin <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/18 16:45:10 by maegaspa     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/18 16:45:48 by maegaspa    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/29 13:20:19 by calin        #+#   ##    ##    #+#       */
+/*   Updated: 2018/11/01 18:35:43 by calin       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_recursive_factorial(int nb)
+size_t	ft_index(const char *str, int c)
 {
-	if (0 < nb && nb < 13)
-		return (nb * ft_recursive_factorial(nb - 1));
-	else if (nb == 1 || nb == 0)
-		return (1);
-	else if (nb < 0 || nb > 12)
-		return (0);
+	size_t index;
+
+	index = 0;
+	while (str[index])
+	{
+		if (str[index] == c)
+			return (index + 1);
+		index++;
+	}
 	return (0);
 }

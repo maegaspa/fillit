@@ -3,62 +3,41 @@
 /*                                                              /             */
 /*   ft_itoa.c                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: maegaspa <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: calin <calin@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/10 16:46:21 by maegaspa     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/16 05:32:53 by maegaspa    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/17 11:38:15 by calin        #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/18 18:58:09 by calin       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int				len(int n)
+char	*ft_itoa(int nb)
 {
-	int len;
+	char	*tab;
+	size_t	count;
+	size_t	negative;
 
-	len = 1;
-	while (n /= 10)
-		len++;
-	return (len);
-}
-
-static int				neg(int n)
-{
-	if (n < 0)
-		n = -n;
-	return (n);
-}
-
-static int				one(int n)
-{
-	if (n < 0)
-		return (1);
-	return (0);
-}
-
-char					*ft_itoa(int n)
-{
-	int		i;
-	int		tmp2;
-	char	*str;
-
-	if (n == -2147483648)
+	negative = 0;
+	count = ft_count_integer(nb);
+	if (nb == -2147483648)
+		return (ft_strdup("-2147483648"));
+	if (nb == 0)
+		return (ft_strdup("0"));
+	if (nb < 0)
 	{
-		str = ft_memalloc(12);
-		str = ft_strcpy(str, "-2147483648");
-		return (str);
+		count++;
+		nb = nb * -1;
+		negative = 1;
 	}
-	tmp2 = one(n);
-	n = neg(n);
-	i = len(n);
-	if (!(str = ft_memalloc(i + tmp2)))
-		return (0);
-	tmp2 == 1 ? str[0] = '-' : 0;
-	while (i--)
+	if ((tab = ft_strnew(count)) == NULL)
+		return (NULL);
+	while (count--)
 	{
-		str[i + tmp2] = n % 10 + '0';
-		n = n / 10;
+		tab[count] = (nb % 10) + 48;
+		nb = nb / 10;
 	}
-	return (str);
+	(negative) ? tab[0] = '-' : tab[0];
+	return (tab);
 }

@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   mapsolver.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: maegaspa <maegaspa@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: seanseau <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/11/30 15:56:55 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/03 16:16:27 by maegaspa    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/21 19:55:53 by seanseau     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/22 16:29:29 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,7 +16,7 @@
 
 char	**ft_solvemap(t_piece *lst, char **map, int nb_pieces)
 {
-	int	tabsize;
+	int		tabsize;
 	t_piece *begin;
 	int		i;
 
@@ -30,9 +30,9 @@ char	**ft_solvemap(t_piece *lst, char **map, int nb_pieces)
 		while (map[tabsize])
 			tabsize++;
 		tabsize++;
-		/*while(map[i])
+		while (map[i])
 			free(map[i++]);
-		free(map);*/
+		free(map);
 		map = ft_createcanvas(lst, nb_pieces, 1);
 	}
 	while (begin)

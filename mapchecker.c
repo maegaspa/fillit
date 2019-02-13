@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   mapchecker.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: maegaspa <maegaspa@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: seanseau <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/11/21 17:57:28 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/03 16:36:56 by maegaspa    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/21 15:49:42 by seanseau     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/22 16:58:01 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,50 +16,54 @@
 
 int		ft_checkvalidmap(char *str)
 {
-	int	res;
-	int	fd;
+	int fd;
+	int nb_pieces;
+	int res;
 
 	res = 1;
 	fd = open(str, O_RDONLY);
-	while (res == 1)
-		res = ft_checkvalidsegment(fd);
+	if ((nb_pieces = ft_countpiece_fd(fd)) < 1)
+		return (-1);
 	close(fd);
-	if (res == 0)
-		return (1);
-	if (res < 0)
-		return (0);
-	return (-1);
+	fd = open(str, O_RDONLY);
+	while (nb_pieces > 0 && res == 1)
+		res = ft_checkvalidsegment(fd, nb_pieces--);
+	close(fd);
+	return (res);
 }
 
-int		ft_checkvalidsegment(int fd)
+int		ft_checkvalidsegment(int fd, int nb_pieces)
 {
-	int		x;
-	char	*line;
+	int		i;
+	char	line[5];
 	int		ret;
 	char	*seg;
-	int		tmp;
+	char	*tmp;
 
 	seg = ft_strnew(0);
-	x = 5;
-	while (x-- && (ret = get_next_line(fd, &line) > 0))
+	i = 4;
+	while (i > 0 && (ret = read(fd, line, 4) > 0))
 	{
-		seg = ft_strcat(seg, line);
-		//free(line);
+		tmp = ft_strsub(line, 0, 4);
+		if (nb_pieces > 0)
+			if ((read(fd, line, 1) > 0))
+				;
+		seg = ft_strcat(seg, tmp);
+		free(tmp);
+		i--;
 	}
-	tmp = ft_checkvalidchar(seg);
+	if (nb_pieces > 1)
+		if ((read(fd, line, 1)) > 0)
+			;
+	tmp = seg;
 	free(seg);
-	if (x == -1)
-		return (tmp);
-	if (x == 0 && ret == 0)
-		return (tmp - 1);
-	return (-1);
+	return (ft_checkvalidchar(tmp));
 }
 
 int		ft_checkvalidchar(char *str)
 {
 	int		y;
 	int		nb_diez;
-	int		tmp;
 
 	y = 0;
 	nb_diez = 0;
@@ -67,7 +71,6 @@ int		ft_checkvalidchar(char *str)
 	{
 		if (str[y] == '#')
 		{
-			tmp = y;
 			nb_diez++;
 			if (!(str[y + 4] == '#' || str[y + 1] == '#'
 						|| str[y - 4] == '#' || str[y - 1] == '#'))
@@ -76,44 +79,43 @@ int		ft_checkvalidchar(char *str)
 		y++;
 	}
 	if (y != 16 || nb_diez != 4 || ft_isfillit(str) == 0 ||
-			ft_checkjoint(str) == 0)
+			ft_checkshape(str) == 0)
 		return (-1);
 	else
 		return (1);
 }
 
-int		ft_checksolvedmap(char **map)
+int		ft_checkshape(char *str)
 {
-	int a;
-	int b;
+	int		total_links;
+	int		i;
 
-	a = 0;
-	b = 0;
-	while (map[0][a])
-		a++;
-	while (b < a - 1)
+	total_links = 0;
+	i = 0;
+	while (i < 4)
 	{
-		ft_putstr(map[b]);
-		b++;
+		total_links += ft_checklink(ft_strnchr(str, '#', i + 1, 0), str);
+		i++;
 	}
-	return (b);
+	if (total_links == 6 || total_links == 8)
+		return (1);
+	return (0);
 }
 
-int		ft_checkjoint(char *str)
+int		ft_checklink(int x, char *str)
 {
-	if ((ft_strnchr(str, '#', 2, 0) == ft_strnchr(str, '#', 3, 0) - 1) ||
-			(ft_strnchr(str, '#', 2, 0) == ft_strnchr(str, '#', 3, 0) - 4) ||
-			(ft_strnchr(str, '#', 2, 0) == ft_strnchr(str, '#', 3, 0) - 3) ||
-			(ft_strnchr(str, '#', 2, 0) == ft_strnchr(str, '#', 3, 0) - 2))
-	{
-		if (ft_strnchr(str, '#', 2, 0) == ft_strnchr(str, '#', 3, 0) - 2)
-		{
-			if (ft_strnchr(str, '#', 1, 0) == ft_strnchr(str, '#', 4, 0) - 4)
-				return (1);
-			else
-				return (0);
-		}
-		return (1);
-	}
-	return (0);
+	int		nb_link_piece;
+	int		len;
+
+	len = ft_strlen(str);
+	nb_link_piece = 0;
+	if (str[x + 1] == '#' && x + 1 < len)
+		nb_link_piece++;
+	if (str[x - 1] == '#' && x - 1 >= 0)
+		nb_link_piece++;
+	if (str[x + 4] == '#' && x + 4 < len)
+		nb_link_piece++;
+	if (str[x - 4] == '#' && x - 4 >= 0)
+		nb_link_piece++;
+	return (nb_link_piece);
 }

@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_strndup.c                                     .::    .:/ .      .::   */
+/*   ft_lenword.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: maegaspa <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: calin <calin@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/11/04 15:17:13 by maegaspa     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/04 17:11:19 by maegaspa    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/15 15:14:37 by calin        #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/18 18:58:13 by calin       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strndup(const char *s, size_t n)
+int		ft_lenword(const char *str, int c)
 {
-	char	*result;
-	size_t	len;
+	int i;
+	int len;
 
-	len = ft_strnlen(s, n);
-	result = (char *)malloc(len + 1);
-	if (!result)
+	len = 0;
+	i = 0;
+	if (!str)
 		return (0);
-	result[len] = '\0';
-	return ((char *)ft_memcpy(result, s, len));
+	while (str[i] == c)
+		i++;
+	while (str[i] != c)
+	{
+		if (str[i] == '\0')
+			return (len);
+		len++;
+		i++;
+	}
+	return (len);
 }

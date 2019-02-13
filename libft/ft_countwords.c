@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_strnlen.c                                     .::    .:/ .      .::   */
+/*   ft_countwords.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: maegaspa <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: calin <calin@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/11/04 15:24:33 by maegaspa     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/04 17:12:32 by maegaspa    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/15 14:15:40 by calin        #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/22 18:17:47 by calin       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strnlen(const char *s, size_t maxlen)
+int		ft_countwords(const char *str, int c)
 {
-	size_t	len;
+	int i;
+	int count;
 
-	len = 0;
-	while (len < maxlen)
+	i = 0;
+	count = 0;
+	if (!str)
+		return (0);
+	if (str[0] && str[0] != c)
+		count++;
+	while (str[i])
 	{
-		if (!*s)
-			return (0);
-		len++;
-		s++;
+		if (str[i] == c && str[i + 1] != c && str[i + 1] != '\0')
+			count++;
+		i++;
 	}
-	return (len);
+	return (count);
 }

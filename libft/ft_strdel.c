@@ -3,21 +3,21 @@
 /*                                                              /             */
 /*   ft_strdel.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: maegaspa <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: calin <calin@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/11 17:45:09 by maegaspa     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/12 19:36:00 by maegaspa    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/11 12:26:42 by calin        #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/18 19:00:41 by calin       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_strdel(char **as)
+void	ft_strdel(char **str)
 {
-	if (as != NULL)
+	if (str != NULL)
 	{
-		free(*as);
-		*as = NULL;
+		free(*str);
+		*str = NULL;
 	}
 }

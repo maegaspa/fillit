@@ -3,35 +3,34 @@
 /*                                                              /             */
 /*   ft_strmap.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: maegaspa <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: calin <calin@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/10 14:17:14 by maegaspa     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/16 10:09:31 by maegaspa    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/11 13:30:12 by calin        #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/18 19:01:13 by calin       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strmap(const char *s, char (*f)(char))
+char	*ft_strmap(char const *str, char (*f)(char))
 {
-	char			*str;
-	char			*str_new;
-	unsigned int	i;
+	int		i;
+	char	*dest;
 
-	str = (char *)s;
-	if (str && f)
+	i = 0;
+	if (str != NULL)
 	{
-		i = 0;
-		if (!(str_new = ft_memalloc(ft_strlen(str) + 1)))
+		if ((dest = (char *)malloc(sizeof(*dest) *
+		(ft_strlen(str) + 1))) == NULL)
 			return (NULL);
 		while (str[i])
 		{
-			str_new[i] = (*f)(str[i]);
+			dest[i] = (*f)(str[i]);
 			i++;
 		}
-		str_new[i] = '\0';
-		return (str_new);
+		dest[i] = '\0';
+		return (dest);
 	}
-	return (NULL);
+	return (0);
 }

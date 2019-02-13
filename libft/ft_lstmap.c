@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   ft_lstmap.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: maegaspa <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: calin <calin@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/15 18:03:09 by maegaspa     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/16 10:10:28 by maegaspa    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/21 11:27:40 by calin        #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/22 14:02:40 by calin       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,24 +15,25 @@
 
 t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
-	t_list	*tmp;
-	t_list	*elem;
-	t_list	*res;
+	t_list	*lstdest;
+	t_list	*beginlst;
+	t_list	*lstemp;
 
 	if (!lst || !f)
 		return (NULL);
-	elem = f(lst);
-	if (!(res = ft_lstnew(elem->content, elem->content_size)))
+	lstemp = f(lst);
+	if ((lstdest = ft_lstnew(lstemp->content, lstemp->content_size)) == NULL)
 		return (NULL);
+	beginlst = lstdest;
 	lst = lst->next;
-	tmp = res;
 	while (lst)
 	{
-		elem = f(lst);
-		if (!(res->next = ft_lstnew(elem->content, elem->content_size)))
+		lstemp = f(lst);
+		if ((lstdest->next = ft_lstnew(lstemp->content,
+		lstemp->content_size)) == NULL)
 			return (NULL);
-		res = res->next;
+		lstdest = lstdest->next;
 		lst = lst->next;
 	}
-	return (tmp);
+	return (beginlst);
 }

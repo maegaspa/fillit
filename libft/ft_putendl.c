@@ -3,18 +3,21 @@
 /*                                                              /             */
 /*   ft_putendl.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: maegaspa <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: calin <calin@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/08 20:51:05 by maegaspa     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/04 18:56:01 by maegaspa    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/12 11:13:33 by calin        #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/18 18:59:46 by calin       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putendl(char const *s)
+void	ft_putendl(char const *str)
 {
-	ft_putstr(s);
-	ft_putchar('\n');
+	if (str)
+	{
+		write(1, str, ft_strlen(str));
+		ft_putchar('\n');
+	}
 }

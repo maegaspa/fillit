@@ -6,7 +6,7 @@
 /*   By: maegaspa <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/16 16:47:00 by maegaspa     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/19 17:34:05 by cgarrot     ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/21 20:11:04 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,18 +21,18 @@
 # include <stdio.h>
 
 char				**ft_get_fillit_tab(char *str);
-char				*ft_algo_vert_horiz(char *str);
-char				**ft_getcontent(int fd, int nb_pieces);
-int					ft_countpiece(int fdp);
-char				*ft_getvalidsegment(int fd);
+char				**ft_getcontent(char *str, int nb_pieces);
+int					ft_countpiece_fd(int fd);
+char				*ft_getvalidsegment();
 int					ft_checkvalidmap(char *str);
-int					ft_checkvalidsegment(int fd);
+int					ft_checkvalidsegment(int fd, int nb_pieces);
 int					ft_checkvalidchar(char *str);
 int					ft_findline(int index);
-int					ft_checksolvedmap(char **map);
+int					ft_checklink(int x, char *str);
 void				ft_print_map(char **map);
 void				ft_eraseline(char ***map, int a);
-int					ft_checkjoint(char *str);
+int					ft_checkshape(char *str);
+int					ft_getzero(char *piece, int on);
 
 typedef	struct		s_piece
 {
@@ -64,5 +64,5 @@ void				ft_erase_piece(t_piece *curr, int pos, char ***map,
 char				**ft_add_canvas_line(char **map,
 		int nb_line, int nb_pieces);
 char				**ft_fillnewcanvas(char **temp, char **map, int x);
-
+char				**ft_tabtab(char **map, int cotemin);
 #endif

@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_strrev.c                                      .::    .:/ .      .::   */
+/*   ft_count_integer.c                               .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: maegaspa <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: calin <calin@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/08/02 12:56:12 by maegaspa     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/18 16:42:16 by maegaspa    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/17 17:38:37 by calin        #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/18 18:56:09 by calin       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrev(char *str)
+int		ft_count_integer(int nb)
 {
-	int		i;
-	int		j;
-	char	rev;
+	size_t	counter;
 
-	i = 0;
-	j = ft_strlen(str) - 1;
-	while (i < j)
+	counter = 0;
+	while (nb)
 	{
-		rev = str[i];
-		str[i] = str[j];
-		str[j] = rev;
-		j--;
-		i++;
+		nb /= 10;
+		counter++;
 	}
-	return (str);
+	return (counter);
 }

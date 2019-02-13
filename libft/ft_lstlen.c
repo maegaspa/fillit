@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_sqrt.c                                        .::    .:/ .      .::   */
+/*   ft_lstlen.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: maegaspa <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: calin <calin@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/18 17:00:39 by maegaspa     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/18 17:13:15 by maegaspa    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/21 11:28:48 by calin        #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/22 14:55:55 by calin       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_sqrt(int nb)
+size_t	ft_lstlen(t_list *lst)
 {
-	int	i;
+	size_t	len;
+	t_list	*lstemp;
 
-	i = 1;
-	if (nb < 0)
+	if (!lst)
 		return (0);
-	while (nb / i != i && i <= 46340)
+	len = 1;
+	lstemp = lst;
+	while (lstemp->next)
 	{
-		if (i > nb)
-			return (0);
-		i++;
+		lstemp = lstemp->next;
+		len++;
 	}
-	if (i * i == nb)
-		return (i);
-	return (0);
+	return (len);
 }

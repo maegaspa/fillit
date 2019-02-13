@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   mapconverter.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: maegaspa <maegaspa@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: seanseau <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/11/21 17:57:13 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/03 16:38:14 by maegaspa    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/21 16:32:50 by seanseau     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/21 20:13:35 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,97 +18,61 @@ char	**ft_get_fillit_tab(char *str)
 {
 	char	**tab;
 	int		fd;
-	int		fdp;
 	int		nb_pieces;
 
-	fdp = open(str, O_RDONLY);
-	nb_pieces = ft_countpiece(fdp);
-	close(fdp);
 	fd = open(str, O_RDONLY);
-	tab = ft_getcontent(fd, nb_pieces);
+	nb_pieces = ft_countpiece_fd(fd);
+	close(fd);
+	tab = ft_getcontent(str, nb_pieces);
+	return (tab);
+}
+
+char	**ft_getcontent(char *str, int nb_pieces)
+{
+	char	**tab;
+	int		i;
+	int		fd;
+
+	if (!(tab = malloc(sizeof(char *) * (nb_pieces + 1))))
+		return (NULL);
+	i = 0;
+	while (i < nb_pieces)
+		tab[i++] = NULL;
+	i = 0;
+	fd = open(str, O_RDONLY);
+	while (i < nb_pieces)
+	{
+		tab[i] = ft_getvalidsegment(fd, nb_pieces);
+		i++;
+	}
+	tab[i] = 0;
 	close(fd);
 	return (tab);
 }
 
-char	**ft_getcontent(int fd, int nb_pieces)
+char	*ft_getvalidsegment(int fd, int nb_pieces)
 {
-	char	**tab;
 	int		i;
-
-	tab = malloc(sizeof(char *) * (nb_pieces + 2));
-	i = 0;
-	if (!tab[i])
-		tab[i] = ft_strnew(0);
-	while (tab[i] != NULL)
-	{
-		tab[i] = ft_getvalidsegment(fd);
-		if (tab[i] != NULL)
-			tab[i + 1] = ft_strnew(0);
-		i++;
-	}
-	return (tab);
-}
-
-char	*ft_getvalidsegment(int fd)
-{
-	int		x;
-	char	*line;
-	int		res;
+	char	line[5];
+	int		ret;
 	char	*seg;
-
-	seg = ft_strnew(0);
-	x = 5;
-	while (x-- && (res = get_next_line(fd, &line) > 0))
-	{
-		seg = ft_strcat(seg, line);
-		free(line);
-	}
-	if (x == -1 || (x == 0 && res == 0))
-		return (ft_algo_vert_horiz(seg));
-	return (NULL);
-}
-
-char	*ft_algo_vert_horiz(char *str)
-{
 	char	*tmp;
 
-	while ((str[0] == '.') && (str[4] == '.')
-			&& (str[8] == '.') && (str[12] == '.'))
+	seg = ft_strnew(16);
+	i = 4;
+	while (i > 0 && (ret = read(fd, line, 4) > 0))
 	{
-		tmp = str;
-		str = ft_strsub(tmp, 1, ft_strlen(str));
-	//	free(tmp);
-		str = ft_strcat(str, ".");
+		tmp = ft_strsub(line, 0, 4);
+		if (nb_pieces > 0)
+			if ((read(fd, line, 1) > 0))
+				;
+		seg = ft_strcat(seg, tmp);
+		free(tmp);
+		i--;
 	}
-	while ((str[0] == '.') && (str[1] == '.')
-			&& (str[2] == '.') && (str[3] == '.'))
-	{
-		tmp = str;
-		str = ft_strsub(tmp, 4, ft_strlen(str));
-		//free(tmp);
-		str = ft_strcat(str, "....");
-	}
-	return (str);
-}
-
-int		ft_countpiece(int fdp)
-{
-	char	*line;
-	int		res;
-	int		nb_line;
-	int		nb_pieces;
-
-	nb_line = 0;
-	nb_pieces = 0;
-	while ((res = get_next_line(fdp, &line) > 0))
-	{
-		nb_line++;
-		//free(line);
-	}
-	while (nb_line > 0)
-	{
-		nb_line = nb_line - 5;
-		nb_pieces++;
-	}
-	return (nb_pieces);
+	if (nb_pieces > 1)
+		if ((read(fd, line, 1)) > 0)
+			;
+	seg[16] = '\0';
+	return (seg);
 }

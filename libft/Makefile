@@ -3,112 +3,113 @@
 #                                                               /              #
 #    Makefile                                         .::    .:/ .      .::    #
 #                                                  +:+:+   +:    +:  +:+:+     #
-#    By: maegaspa <marvin@le-101.fr>                +:+   +:    +:    +:+      #
+#    By: calin <calin@student.le-101.fr>            +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
-#    Created: 2018/10/04 18:45:14 by maegaspa     #+#   ##    ##    #+#        #
-#    Updated: 2018/12/03 18:23:59 by seanseau    ###    #+. /#+    ###.fr      #
+#    Created: 2018/10/05 11:07:00 by calin        #+#   ##    ##    #+#        #
+#    Updated: 2019/01/19 15:39:51 by seanseau    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
 
-.PHONY: all fclean clean re
-
-CC = gcc
-
 NAME = libft.a
 
-FLAGS = -Wall -Wextra -Werror
+SRC = 	ft_bzero.c \
+    	ft_memchr.c \
+        ft_memcpy.c \
+        ft_putchar.c \
+        ft_putstr.c \
+        ft_strcpy.c \
+        ft_strlen.c \
+        ft_strncpy.c \
+        ft_atoi.c \
+        ft_memccpy.c \
+        ft_memcmp.c \
+        ft_memset.c \
+        ft_putnbr.c \
+        ft_strcmp.c \
+        ft_strdup.c \
+        ft_strncmp.c \
+        ft_strstr.c \
+        ft_strcat.c \
+        ft_strncat.c \
+        ft_memmove.c \
+        ft_isalpha.c \
+        ft_isdigit.c \
+        ft_isprint.c \
+        ft_isascii.c \
+        ft_toupper.c \
+        ft_tolower.c \
+        ft_isalnum.c \
+        ft_memchr.c \
+        ft_strchr.c \
+        ft_strrchr.c \
+        ft_strnstr.c \
+        ft_striter.c \
+        ft_strclr.c \
+        ft_striteri.c \
+        ft_memalloc.c \
+        ft_memdel.c \
+        ft_putchar_fd.c \
+        ft_putstr_fd.c \
+        ft_putendl.c \
+        ft_putendl_fd.c \
+        ft_putnbr_fd.c \
+        ft_strequ.c \
+        ft_strnequ.c \
+        ft_strnew.c \
+        ft_strdel.c \
+        ft_strmap.c \
+        ft_strmapi.c \
+        ft_strsub.c \
+        ft_strjoin.c \
+        ft_strtrim.c \
+        ft_strsplit.c \
+        ft_itoa.c \
+        ft_strlcat.c \
+		ft_count_integer.c \
+		ft_countwords.c \
+		ft_lenword.c \
+		ft_memrcpy.c \
+		ft_lstnew.c \
+		ft_lstdelone.c \
+		ft_lstdel.c \
+		ft_lstadd.c \
+		ft_lstiter.c \
+		ft_lstmap.c \
+		ft_lstlen.c \
+		ft_swap.c \
+		ft_index.c \
+		get_next_line.c \
+		ft_isfillit.c \
+		ft_strnchr.c \
+		ft_skurt.c \
 
-INCLUDE = ../includes/libft.h
+OBJ = $(SRC:.c=.o)
 
-FILES = ft_atoi\
-ft_bzero\
-ft_isalnum\
-ft_isalpha\
-ft_isascii\
-ft_isdigit\
-ft_isprint\
-ft_isfillit\
-ft_itoa\
-ft_memalloc\
-ft_memccpy\
-ft_memchr\
-ft_memcmp\
-ft_memcpy\
-ft_memdel\
-ft_memmove\
-ft_memset\
-ft_putchar\
-ft_putchar_fd\
-ft_putendl\
-ft_putendl_fd\
-ft_putnbr\
-ft_putnbr_fd\
-ft_putstr\
-ft_putstr_fd\
-ft_strcat\
-ft_strchr\
-ft_strnchr\
-ft_strclr\
-ft_strcmp\
-ft_strcpy\
-ft_strdel\
-ft_strdup\
-ft_strequ\
-ft_striter\
-ft_striteri\
-ft_strjoin\
-ft_strlcat\
-ft_strlen\
-ft_strmap\
-ft_strmapi\
-ft_strncat\
-ft_strncmp\
-ft_strncpy\
-ft_strnequ\
-ft_strnew\
-ft_strnstr\
-ft_strrchr\
-ft_strrev\
-ft_strsplit\
-ft_strstr\
-ft_strsub\
-ft_strtrim\
-ft_tolower\
-ft_toupper\
-ft_lstnew\
-ft_lstdelone\
-ft_lstdel\
-ft_lstadd\
-ft_lstiter\
-ft_lstmap\
-ft_strrev\
-ft_swap\
-ft_range\
-ft_recursive_factorial\
-ft_sqrt\
-ft_strnlen\
-ft_strndup\
-ft_isfillit\
-get_next_line\
-ft_skurt\
+FLAG = -Wall -Wextra -Werror
 
-SRC = $(addsuffix .c, $(FILES))
+CC = gcc $(FLAG)
 
-OBJ = $(addsuffix .o, $(FILES))
+RM = /bin/rm -f
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-		@ar rcs $(NAME) $(OBJ)
+	ar rc $(NAME) $(OBJ)
+	ranlib $(NAME)
+	@echo "Make libft.a :\033[0;32m DONE !\033[0m"
 
-%.o:%.c ../includes/libft.h
-		@$(CC) $(FLAGS) -o $@ -c $< -I $(INCLUDE)
+%.o: %.c
+	$(CC) -o $@ -c $< -I ./
 
 clean:
-		@rm -f $(OBJ)
+	@$(RM) $(OBJ)
+	@echo "Make obj clean :\033[0;32m DONE !\033[0m"
 
 fclean: clean
-		@rm -f $(NAME)
+	@$(RM) $(NAME)
+	@echo "Make libft.a clean :\033[0;32m DONE !\033[0m"
 
 re: fclean all
+
+.PHONY: all clean fclean re

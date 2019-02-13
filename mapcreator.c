@@ -5,8 +5,8 @@
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: seanseau <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/03 17:34:34 by seanseau     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/19 13:08:15 by seanseau    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/21 19:58:22 by seanseau     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/22 17:00:41 by seanseau    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,37 +14,41 @@
 #include "libft.h"
 #include "fillit.h"
 
+char	**ft_tabtab(char **map, int cotemin)
+{
+	int		x;
+	int		y;
+	char	*tmp;
+
+	x = -1;
+	while (++x < cotemin)
+	{
+		y = -1;
+		map[x] = ft_strnew(cotemin);
+		while (++y < cotemin)
+		{
+			tmp = map[x];
+			map[x] = ft_strjoin(map[x], ".");
+			free(tmp);
+		}
+		map[x][y] = '\n';
+		map[x][cotemin + 1] = '\0';
+	}
+	map[x] = 0;
+	return (map);
+}
+
 char	**ft_createcanvas(t_piece *curr, int nb_pieces, int z)
 {
 	int		cotemin;
 	char	**map;
-	char	*tmp;
-	int		x;
-	int		y;
 
-	x = 0;
 	cotemin = ft_skurt(nb_pieces * 4) + z;
 	while (nb_pieces == 1 && (curr->ligne_d >= cotemin || curr->d >= cotemin))
 		cotemin++;
-	if (!(map = (char **)malloc(sizeof(*map) * (cotemin - 1))))
+	if (!(map = (char **)malloc(sizeof(*map) * (cotemin + 1))))
 		return (NULL);
-	while (x < cotemin)
-	{
-		y = 0;
-		map[x] = ft_strnew(cotemin + 1);
-		while (y < cotemin)
-		{
-			tmp = map[x];
-			map[x] = ft_strjoin(tmp, ".");
-			//free(tmp);
-			y++;
-		}
-		tmp = map[x];
-		map[x] = ft_strjoin(tmp, "\n");
-		//free(tmp);
-		x++;
-	}
-	return (map);
+	return (ft_tabtab(map, cotemin));
 }
 
 void	ft_erase_piece(t_piece *lst, int pos, char ***map, int tabsize)

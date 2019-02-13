@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_range.c                                       .::    .:/ .      .::   */
+/*   ft_memrcpy.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: maegaspa <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: calin <calin@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/18 16:47:38 by maegaspa     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/18 17:08:49 by maegaspa    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/11 18:03:45 by calin        #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/18 18:59:26 by calin       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		*ft_range(int min, int max)
+void	*ft_memrcpy(void *dest, const void *src, size_t len)
 {
-	int		i;
-	int		*tab;
+	size_t i;
 
-	i = 0;
-	if (min >= max)
-		return (0);
-	if (!(tab = (int*)malloc(sizeof(int) * (max - min))))
-		return (NULL);
-	while (min < max)
+	i = len;
+	while (i > 0)
 	{
-		tab[i] = min;
-		min++;
-		i++;
+		i--;
+		((unsigned char *)dest)[i] = ((unsigned char *)src)[i];
 	}
-	return (tab);
+	return ((unsigned char *)dest);
 }
